@@ -1,11 +1,16 @@
 "use client";
 
-import { redirect } from "next/navigation";
-import React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  localStorage.removeItem("user");
-  redirect("/users");
+  const router = useRouter();
+
+  useEffect(() => {
+    localStorage.removeItem("user");
+    router.push("/users");
+  }, [router]);
+
   return <div></div>;
 };
 
