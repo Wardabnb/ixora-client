@@ -1,6 +1,6 @@
 "use client";
 import { useGetUser } from "@/api/user/get";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useGetRelatedStay } from "@/api/stays/related";
 import Image from "next/image";
