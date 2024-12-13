@@ -1,48 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import React, { Suspense } from "react";
 
-const LogoutPageContent = () => {
-  const [loading, setLoading] = useState(true);
+const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    let isMounted = true;
+    // Ensure this code only runs on the client side
 
-    const handleLogout = async () => {
-      try {
-        localStorage.removeItem("user"); // Clear user data
-        if (isMounted) {
-          setLoading(false);
-          router.push("/users"); // Redirect after logout
-        }
-      } catch (error) {
-        console.error("Logout failed:", error);
-      }
-    };
+    localStorage.removeItem("user");
+    router.push("/users");
+  }, []); // Run once on component mount
 
-    handleLogout();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [router]);
-
-  if (loading) {
-    return <div>Logging out...</div>; // Loading message
-  }
-
-  return null;
+  return <div>Redirecting...</div>;
 };
 
-const LogoutPage = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <LogoutPageContent />
-    </Suspense>
-  );
-};
-
-export default LogoutPage;
+export default Page;
