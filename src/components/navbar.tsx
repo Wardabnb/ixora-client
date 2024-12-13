@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+
 import { useGetUser } from "@/api/user/get";
 
 type Props = {};
@@ -10,9 +10,6 @@ type Props = {};
 const Navbar = (props: Props) => {
   const { data: user, isLoading, isError, error } = useGetUser();
   console.log("user nav", user);
-
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("userId");
 
   useEffect(() => {
     if (user) {
