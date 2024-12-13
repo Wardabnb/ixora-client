@@ -2,44 +2,47 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import React, { Suspense } from "react";
 
-const LogoutPage = () => {
+const LogoutPageContent = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    let isMounted = true; // Flag to prevent state updates if the component is unmounted
+    let isMounted = true;
 
     const handleLogout = async () => {
       try {
-        // Remove user data from localStorage
         localStorage.removeItem("user");
-
-        // Optional: Call your authentication service's logout method
-        // await authService.logout();  // Uncomment if applicable
-
         if (isMounted) {
-          setLoading(false); // Stop loading
-          router.push("/users"); // Redirect to the desired page
+          setLoading(false);
+          router.push("/users");
         }
       } catch (error) {
         console.error("Logout failed:", error);
-        // Optional: Display an error message or take fallback action
       }
     };
 
     handleLogout();
 
     return () => {
-      isMounted = false; // Cleanup to avoid memory leaks
+      isMounted = false;
     };
   }, [router]);
 
   if (loading) {
-    return <div>Logging out...</div>; // Display a message while processing
+    return <div>Logging out...</div>;
   }
 
-  return null; // Return null after logout
+  return null;
+};
+
+const LogoutPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LogoutPageContent />
+    </Suspense>
+  );
 };
 
 export default LogoutPage;
