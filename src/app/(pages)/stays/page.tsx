@@ -18,11 +18,11 @@ import Link from "next/link";
 type Props = {};
 
 const page = (props: Props) => {
-  const searchParams = useSearchParams();
-  const currentPage = searchParams.get("page") || "1";
+  // const searchParams = useSearchParams();
+  // const currentPage = searchParams.get("page") || "1";
   const user = JSON.parse(localStorage.getItem("user") || "[]");
 
-  const { data: stays } = useGetStays(currentPage);
+  const { data: stays } = useGetStays();
   console.log("stays data", stays);
 
   const numPages = 10;
@@ -62,7 +62,7 @@ const page = (props: Props) => {
         ))}
       </div>
 
-      <Pagination className="mt-4">
+      {/* <Pagination className="mt-4">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -91,7 +91,7 @@ const page = (props: Props) => {
             />
           </PaginationItem>
         </PaginationContent>
-      </Pagination>
+      </Pagination> */}
     </div>
   );
 };
