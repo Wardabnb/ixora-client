@@ -13,10 +13,10 @@ const LogoutPageContent = () => {
 
     const handleLogout = async () => {
       try {
-        localStorage.removeItem("user");
+        localStorage.removeItem("user"); // Clear user data
         if (isMounted) {
-          router.replace("/users"); // Prefer replace over push for logout
           setLoading(false);
+          router.push("/users"); // Redirect after logout
         }
       } catch (error) {
         console.error("Logout failed:", error);
@@ -31,7 +31,7 @@ const LogoutPageContent = () => {
   }, [router]);
 
   if (loading) {
-    return <div>Logging out...</div>;
+    return <div>Logging out...</div>; // Loading message
   }
 
   return null;
