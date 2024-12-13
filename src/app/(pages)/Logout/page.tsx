@@ -15,8 +15,8 @@ const LogoutPageContent = () => {
       try {
         localStorage.removeItem("user");
         if (isMounted) {
+          router.replace("/users"); // Prefer replace over push for logout
           setLoading(false);
-          router.push("/users");
         }
       } catch (error) {
         console.error("Logout failed:", error);
