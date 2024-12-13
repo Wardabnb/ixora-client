@@ -3,34 +3,43 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const Page = () => {
+const LogoutPage = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const handleLogout = () => {
-      // Remove the user data from localStorage
-      localStorage.removeItem("user");
+    let isMounted = true; // Flag to prevent state updates if the component is unmounted
 
-      // Optional: If you're using an authentication service, call its logout method here
-      // For example:
-      // authService.logout();  // Example for Auth0 or Firebase
+    const handleLogout = async () => {
+      try {
+        // Remove user data from localStorage
+        localStorage.removeItem("user");
 
-      // Set loading to false after removing user data and completing logout tasks
-      setLoading(false);
+        // Optional: Call your authentication service's logout method
+        // await authService.logout();  // Uncomment if applicable
 
-      // Redirect after logout
-      router.push("/users");
+        if (isMounted) {
+          setLoading(false); // Stop loading
+          router.push("/users"); // Redirect to the desired page
+        }
+      } catch (error) {
+        console.error("Logout failed:", error);
+        // Optional: Display an error message or take fallback action
+      }
     };
 
     handleLogout();
+
+    return () => {
+      isMounted = false; // Cleanup to avoid memory leaks
+    };
   }, [router]);
 
   if (loading) {
-    return <div>Logging out...</div>; // Display a loading message while the logout is in progress
+    return <div>Logging out...</div>; // Display a message while processing
   }
 
-  return <div></div>;
+  return null; // Return null after logout
 };
 
-export default Page;
+export default LogoutPage;
