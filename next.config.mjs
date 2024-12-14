@@ -9,10 +9,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "**", // Match all HTTPS domains
+        hostname: "**",
       },
     ],
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
